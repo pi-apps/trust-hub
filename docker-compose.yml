@@ -16,3 +16,22 @@ services:
     volumes:
       - ./:/home/node/app
     command: dumb-init yarn dev --node-args="--inspect=0.0.0.0" --encore-args="--host ${HOST} --port 8080"
+
+  postgres-db:
+    container_name: postgres-db
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DB_NAME}
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    depends_on:
+      - postgres-db
+    ports:
+      - 8081:8080
