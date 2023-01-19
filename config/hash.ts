@@ -5,8 +5,8 @@
  * file.
  */
 
-import Env from '@ioc:Adonis/Core/Env'
-import { hashConfig } from '@adonisjs/core/build/config'
+import Env from '@ioc:Adonis/Core/Env';
+import { hashConfig } from '@adonisjs/core/build/config';
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +18,7 @@ import { hashConfig } from '@adonisjs/core/build/config'
 |
 */
 export default hashConfig({
-  /*
+	/*
   |--------------------------------------------------------------------------
   | Default hasher
   |--------------------------------------------------------------------------
@@ -27,10 +27,10 @@ export default hashConfig({
   | free to change the default value
   |
   */
-  default: Env.get('HASH_DRIVER', 'scrypt'),
+	default: Env.get('HASH_DRIVER', 'scrypt'),
 
-  list: {
-    /*
+	list: {
+		/*
     |--------------------------------------------------------------------------
     | scrypt
     |--------------------------------------------------------------------------
@@ -43,17 +43,17 @@ export default hashConfig({
     | https://nodejs.org/api/crypto.html#cryptoscryptpassword-salt-keylen-options-callback
     |
     */
-    scrypt: {
-      driver: 'scrypt',
-      cost: 16384,
-      blockSize: 8,
-      parallelization: 1,
-      saltSize: 16,
-      keyLength: 64,
-      maxMemory: 32 * 1024 * 1024,
-    },
+		scrypt: {
+			driver: 'scrypt',
+			cost: 16_384,
+			blockSize: 8,
+			parallelization: 1,
+			saltSize: 16,
+			keyLength: 64,
+			maxMemory: 32 * 1024 * 1024,
+		},
 
-    /*
+		/*
     |--------------------------------------------------------------------------
     | Argon
     |--------------------------------------------------------------------------
@@ -66,16 +66,16 @@ export default hashConfig({
     | npm install phc-argon2
     |
     */
-    argon: {
-      driver: 'argon2',
-      variant: 'id',
-      iterations: 3,
-      memory: 4096,
-      parallelism: 1,
-      saltSize: 16,
-    },
+		argon: {
+			driver: 'argon2',
+			variant: 'id',
+			iterations: 3,
+			memory: 4096,
+			parallelism: 1,
+			saltSize: 16,
+		},
 
-    /*
+		/*
     |--------------------------------------------------------------------------
     | Bcrypt
     |--------------------------------------------------------------------------
@@ -88,9 +88,9 @@ export default hashConfig({
     | npm install phc-bcrypt
     |
     */
-    bcrypt: {
-      driver: 'bcrypt',
-      rounds: 10,
-    },
-  },
-})
+		bcrypt: {
+			driver: 'bcrypt',
+			rounds: 10,
+		},
+	},
+});

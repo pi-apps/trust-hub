@@ -5,9 +5,9 @@
  * file.
  */
 
-import type { Config } from '@japa/runner'
-import TestUtils from '@ioc:Adonis/Core/TestUtils'
-import { assert, runFailedTests, specReporter, apiClient } from '@japa/preset-adonis'
+import TestUtils from '@ioc:Adonis/Core/TestUtils';
+import type { Config } from '@japa/runner';
+import { assert, runFailedTests, specReporter, apiClient } from '@japa/preset-adonis';
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +20,7 @@ import { assert, runFailedTests, specReporter, apiClient } from '@japa/preset-ad
 | Feel free to remove existing plugins or add more.
 |
 */
-export const plugins: Required<Config>['plugins'] = [assert(), runFailedTests(), apiClient()]
+export const plugins: Required<Config>['plugins'] = [assert(), runFailedTests(), apiClient()];
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +32,7 @@ export const plugins: Required<Config>['plugins'] = [assert(), runFailedTests(),
 | of tests on the terminal.
 |
 */
-export const reporters: Required<Config>['reporters'] = [specReporter()]
+export const reporters: Required<Config>['reporters'] = [specReporter()];
 
 /*
 |--------------------------------------------------------------------------
@@ -47,9 +47,9 @@ export const reporters: Required<Config>['reporters'] = [specReporter()]
 |
 */
 export const runnerHooks: Pick<Required<Config>, 'setup' | 'teardown'> = {
-  setup: [() => TestUtils.ace().loadCommands()],
-  teardown: [],
-}
+	setup: [() => TestUtils.ace().loadCommands()],
+	teardown: [],
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -63,7 +63,7 @@ export const runnerHooks: Pick<Required<Config>, 'setup' | 'teardown'> = {
 | the HTTP server when it is a functional suite.
 */
 export const configureSuite: Required<Config>['configureSuite'] = (suite) => {
-  if (suite.name === 'functional') {
-    suite.setup(() => TestUtils.httpServer().start())
-  }
-}
+	if (suite.name === 'functional') {
+		suite.setup(() => TestUtils.httpServer().start());
+	}
+};
