@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { join } = require('path');
 const Encore = require('@symfony/webpack-encore');
+const webpackExternal = require('webpack-node-externals')();
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 | be inside the public directory, so that AdonisJS can serve it.
 |
 */
-Encore.setOutputPath('./public/assets');
+Encore.setOutputPath('./build/inertia/ssr');
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +32,7 @@ Encore.setOutputPath('./public/assets');
 | relative from the "public" directory.
 |
 */
-Encore.setPublicPath('/assets');
+Encore.setPublicPath('/ssr');
 
 /*
 |--------------------------------------------------------------------------
@@ -46,38 +47,9 @@ Encore.setPublicPath('/assets');
 | entrypoints.
 |
 */
-Encore.addEntry('app', './resources/js/app.tsx');
+Encore.addEntry('ssr', './resources/js/ssr.tsx');
 Encore.enableTypeScriptLoader();
 Encore.enableReactPreset();
-
-/*
-|--------------------------------------------------------------------------
-| Copy assets
-|--------------------------------------------------------------------------
-|
-| Since the edge templates are not part of the Webpack compile lifecycle, any
-| images referenced by it will not be processed by Webpack automatically. Hence
-| we must copy them manually.
-|
-*/
-// Encore.copyFiles({
-//   from: './resources/images',
-//   to: 'images/[path][name].[hash:8].[ext]',
-// })
-
-/*
-|--------------------------------------------------------------------------
-| Split shared code
-|--------------------------------------------------------------------------
-|
-| Instead of bundling duplicate code in all the bundles, generate a separate
-| bundle for the shared code.
-|
-| https://symfony.com/doc/current/frontend/encore/split-chunks.html
-| https://webpack.js.org/plugins/split-chunks-plugin/
-|
-*/
-// Encore.splitEntryChunks()
 
 /*
 |--------------------------------------------------------------------------
@@ -99,16 +71,6 @@ Encore.disableSingleRuntimeChunk();
 |
 */
 Encore.cleanupOutputBeforeBuild();
-
-/*
-|--------------------------------------------------------------------------
-| Source maps
-|--------------------------------------------------------------------------
-|
-| Enable source maps in production
-|
-*/
-Encore.enableSourceMaps(!Encore.isProduction());
 
 /*
 |--------------------------------------------------------------------------
@@ -187,7 +149,7 @@ Encore.configureDevServerOptions((options) => {
 // Encore.enableVueLoader(() => {}, {
 //   version: 3,
 //   runtimeCompilerBuild: false,
-//   useJsx: false
+//   useJsx: false,
 // })
 
 /*
@@ -208,10 +170,26 @@ config.stats = 'errors-warnings';
 
 /*
 |--------------------------------------------------------------------------
+| SSR Config
+|--------------------------------------------------------------------------
+|
+*/
+config.externals = [webpackExternal];
+config.externalsPresets = { node: true };
+config.output = {
+	libraryTarget: 'commonjs2',
+	filename: 'ssr.js',
+	path: join(__dirname, './build/inertia/ssr'),
+};
+config.experiments = { outputModule: true };
+
+/*
+|--------------------------------------------------------------------------
 | Export config
 |--------------------------------------------------------------------------
 |
 | Export config for webpack to do its job
 |
 */
+
 module.exports = config;
