@@ -6,7 +6,7 @@ export default function render(page) {
 	return createInertiaApp({
 		page,
 		render: ReactDOMServer.renderToString,
-		resolve: (name) => import(`./pages/${name}`).then((module) => module.default),
+		resolve: (name) => require(`./pages/${name}`),
 		setup: ({ App, props }) => <App {...props} />,
 	});
 }

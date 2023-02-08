@@ -9,7 +9,7 @@ ReactDOM.render(
 	<InertiaApp
 		initialPage={JSON.parse(root.dataset.page)}
 		initialComponent={root.dataset.component}
-		resolveComponent={(name) => import(`./pages/${name}`).then((module) => module.default)}
+		resolveComponent={(name) => require(`./pages/${name}`)}
 	/>,
 	root,
 );
